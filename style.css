@@ -1,0 +1,348 @@
+/*html,
+body,
+a,
+button {
+        cursor: none;
+} */
+
+body {
+    font-family: Roboto, "筑紫B丸ゴシック", sans-serif;
+    line-height: 1.75;
+    font-size: 16px;
+    background-color: rgb(243, 243, 174, 0.700);
+    /*   cursor: none;  */
+}
+
+.wrapper {
+    margin: 15px auto;
+    max-width: 700px;
+}
+
+.container-calendar {
+    background: #ffffff;
+    padding: 15px;
+    width: 50%;
+    margin: 0 auto;
+    overflow: auto;
+    border-radius: 15px;
+}
+
+.button-container-calendar button {
+    cursor: pointer;
+    display: inline-block;
+    zoom: 1;
+    background: #00a2b7;
+    color: #fff;
+    border: 1px solid #0aa2b5;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+
+.table-calendar {
+    border-collapse: collapse;
+    width: 100%;
+
+}
+
+.table-calendar th,
+.table-calendar td {
+    padding: 10px;
+    border: 1px solid #e2e2e2;
+    text-align: center;
+    vertical-align: top;
+}
+
+.date-picker.selected {
+    font-weight: bold;
+    color: #fff;
+    background: #cc0000;
+}
+
+.date-picker.selected span {
+    border-bottom: 2px solid currentColor;
+}
+
+/* 日曜 */
+.date-picker:nth-child(1) {
+    color: red;
+}
+
+/* 土曜 */
+.date-picker:nth-child(7) {
+    color: blue;
+}
+
+#monthAndYear {
+    text-align: center;
+    font-size: 20px;
+}
+
+.button-container-calendar {
+    position: relative;
+    margin-bottom: 1em;
+    overflow: hidden;
+    clear: both;
+}
+
+#previous {
+    float: left;
+}
+
+#next {
+    float: right;
+}
+
+.footer-container-calendar {
+    margin-top: 1em;
+    border-top: 1px solid #dadada;
+    padding: 10px 0;
+}
+
+.footer-container-calendar select {
+    cursor: pointer;
+    display: inline-block;
+    zoom: 1;
+    background: #ffffff;
+    color: #454545;
+    border: 1px solid #bfc5c5;
+    border-radius: 3px;
+    padding: 5px 1em;
+}
+
+/*toppage*/
+
+header {
+    font-size: 1.5rem;
+}
+
+header,
+form {
+    min-height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form input,
+form button {
+    padding: 0.5rem;
+    font-size: 2rem;
+    border: none;
+    background: white;
+}
+
+form button {
+    color: rgb(216, 126, 126);
+    background: white;
+    transition: all 0.3s ease;
+}
+
+form button:hover {
+    background: rgb(216, 126, 126);
+    color: white;
+}
+
+.todo-input {
+    height: 47px;
+    width: 250px;
+    font-size: 15px;
+}
+
+.todo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.todo-list {
+    min-width: 30%;
+    list-style: none;
+    padding-bottom: 40px;
+}
+
+.todo {
+    margin: 0.5rem;
+    background: white;
+    color: black;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.5s ease;
+}
+
+.todo-button {
+    background-color: rgb(216, 126, 126, 0.7);
+    height: 47px;
+}
+
+
+.todo li {
+    flex: 1;
+}
+
+.trash-btn,
+.complete-btn {
+    background: #94cf00;
+    color: white;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+}
+
+.complete-btn {
+    background: #ffc130;
+}
+
+.todo-item {
+    padding: 0 0.5rem;
+}
+
+/* クリックイベント時に個別に反応しないように */
+.fa-trash,
+.fa-check {
+    pointer-events: none;
+}
+
+.completed {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.fall {
+    transform: translateY(8rem) rotateZ(20deg);
+    opacity: 0;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border: none;
+    width: 10rem;
+    padding: 1rem;
+    cursor: none;
+}
+
+.select {
+    margin: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.select::after {
+    content: "\25BC";
+    background: rgb(216, 126, 126);
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.select:hover::after {
+    background: white;
+    color: rgb(216, 126, 126);
+}
+
+.kaidashi-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.date {
+    text-decoration: none;
+}
+
+/* モーダル */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(167, 130, 130, 0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+.modal_area {
+    width: 500px;
+    height: 350px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    text-align: center;
+    z-index: 2;
+    border-radius: 10px;
+}
+
+.modal_area .ttl {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.modal_area p {
+    padding: 15px;
+    margin: 25px 0;
+}
+
+.modal_area button {
+    display: block;
+    margin: auto;
+    background: rgb(217, 154, 154);
+    color: #fff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+}
+
+.modal_area button:hover {
+    background: rgb(145, 145, 145);
+}
+
+/* ラジオボタンの○を消す */
+input[type="radio"] {
+    display: none;
+}
+
+.feeling_radio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.radio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* 画像の周りに隙間をあける */
+label img {
+    margin: 3px;
+    padding: 5px;
+}
+
+/* 未選択の場合、色を薄くする */
+input[type="radio"]+label img {
+    opacity: 0.5;
+}
+
+/* 選択済みの場合、色を濃くする */
+input[type="radio"]:checked+label img {
+    opacity: 1.5;
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>ココロレコード</title>
+</head>
+
+<body>
+    <div class="container-calendar">
+        <h4 id="monthAndYear"></h4>
+        <div class="button-container-calendar">
+            <button id="previous" onclick="previous()">‹</button>
+            <button id="next" onclick="next()">›</button>
+        </div>
+
+        <table class="table-calendar" id="calendar" data-lang="ja">
+            <thead id="thead-month"></thead>
+            <tbody id="calendar-body"></tbody>
+        </table>
+
+        <div class="footer-container-calendar">
+            <label for="month">年月指定：</label>
+            <select id="month" onchange="jump()">
+                <option value=0>1月</option>
+                <option value=1>2月</option>
+                <option value=2>3月</option>
+                <option value=3>4月</option>
+                <option value=4>5月</option>
+                <option value=5>6月</option>
+                <option value=6>7月</option>
+                <option value=7>8月</option>
+                <option value=8>9月</option>
+                <option value=9>10月</option>
+                <option value=10>11月</option>
+                <option value=11>12月</option>
+            </select>
+            <select id="year" onchange="jump()"></select>
+        </div>
+    </div>
+
+    <div class="overlay">
+        <div class="modal_area">
+            <p class="ttl">今日の気分は？？</p>
+            <p class="feeling_radio"><input id="feeling_a" type="radio" value="good" name="feeling">
+                <label for="feeling_a" class="radio">Good!!<img src="img/good.png" class="good" width="70"
+                        height="70"></label>
+                <input id="feeling_b" type="radio" value="ok" name="feeling">
+                <label for="feeling_b" class="radio">OK<img src="img/ok.png" class="ok" width="70" height="70"></label>
+                <input id="feeling_c" type="radio" value="soso" name="feeling">
+                <label for="feeling_c" class="radio">SoSo<img src="img/soso.png" class="soso" width="70"
+                        height="70"></label>
+                <input id="feeling_d" type="radio" value="sad" name="feeling">
+                <label for="feeling_d" class="radio">Sad<img src="img/sad.png" class="sad" width="70"
+                        height="70"></label>
+                <input id="feeling_e" type="radio" value="mad" name="feeling">
+                <label for="feeling_e" class="radio">Mad<img src="img/mad.png" class="mad" width="70"
+                        height="70"></label>
+            </p>
+
+            <button href="#" class="save send" id="saveButton">Save</button>
+        </div>
+    </div>
+</body>
+
+
+<script src="feeling.js"></script>

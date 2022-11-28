@@ -1,0 +1,18 @@
+main {
+    font-family: Roboto, "筑紫B丸ゴシック", sans-serif;
+    line-height: 1.75;
+    font-size: 16px;
+    background-color: rgba(180, 237, 240, 0.7);
+    position: relative;
+}
+
+.memoApp {
+    max-width: 375px;
+    margin: 0 auto 20px;
+}
+
+.memoApp input,
+.memoApp textarea,
+.memoApp button {
+    margin-bottom: 10px;
+}
