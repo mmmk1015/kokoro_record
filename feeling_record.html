@@ -45,27 +45,125 @@
 
     <div class="overlay">
         <div class="modal_area">
-            <p class="ttl">今日の気分は？？</p>
-            <p class="feeling_radio"><input id="feeling_a" type="radio" value="good" name="feeling">
-                <label for="feeling_a" class="radio">Good!!<img src="img/good.png" class="good" width="70"
-                        height="70"></label>
-                <input id="feeling_b" type="radio" value="ok" name="feeling">
-                <label for="feeling_b" class="radio">OK<img src="img/ok.png" class="ok" width="70" height="70"></label>
-                <input id="feeling_c" type="radio" value="soso" name="feeling">
-                <label for="feeling_c" class="radio">SoSo<img src="img/soso.png" class="soso" width="70"
-                        height="70"></label>
-                <input id="feeling_d" type="radio" value="sad" name="feeling">
-                <label for="feeling_d" class="radio">Sad<img src="img/sad.png" class="sad" width="70"
-                        height="70"></label>
-                <input id="feeling_e" type="radio" value="mad" name="feeling">
-                <label for="feeling_e" class="radio">Mad<img src="img/mad.png" class="mad" width="70"
-                        height="70"></label>
-            </p>
+            <form>
+                <fieldset>
+                    <legend>今日のレコード</legend>
 
-            <button href="#" class="save send" id="saveButton">Save</button>
+                    <p class="ttl">今日の気分は？？</p>
+                    <p class="feeling_radio" id="feeling"><input id="feeling_a" type="radio" value="good"
+                            name="feeling">
+                        <label for="feeling_a" class="radio">Good!!<img src="img/good.png" class="good" width="70"
+                                height="70"></label>
+                        <input id="feeling_b" type="radio" value="ok" name="feeling">
+                        <label for="feeling_b" class="radio">OK<img src="img/ok.png" class="ok" width="70"
+                                height="70"></label>
+                        <input id="feeling_c" type="radio" value="soso" name="feeling">
+                        <label for="feeling_c" class="radio">SoSo<img src="img/soso.png" class="soso" width="70"
+                                height="70"></label>
+                        <input id="feeling_d" type="radio" value="sad" name="feeling">
+                        <label for="feeling_d" class="radio">Sad<img src="img/sad.png" class="sad" width="70"
+                                height="70"></label>
+                        <input id="feeling_e" type="radio" value="mad" name="feeling">
+                        <label for="feeling_e" class="radio">Mad<img src="img/mad.png" class="mad" width="70"
+                                height="70"></label>
+                    </p>
+
+                    <div class="memo">
+                        <p class="memo_ttl">出来事メモ</p>
+                        <textarea id="text" rows="5" cols="45" wrap="hard"></textarea>
+                    </div>
+
+                </fieldset>
+            </form>
+
+            <button type="button" class="send" id="send">Send</button>
         </div>
     </div>
+    <!-- データ出力場所 -->
+    <ul id="output"></ul>
+
 </body>
 
 
 <script src="feeling.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    // 日時をいい感じの形式にする関数
+    function convertTimestampToDatetime(timestamp) {
+        const _d = timestamp ? new Date(timestamp * 1000) : new Date();
+        const Y = _d.getFullYear();
+        const m = (_d.getMonth() + 1).toString().padStart(2, '0');
+        const d = _d.getDate().toString().padStart(2, '0');
+        const H = _d.getHours().toString().padStart(2, '0');
+        const i = _d.getMinutes().toString().padStart(2, '0');
+        const s = _d.getSeconds().toString().padStart(2, '0');
+        return `${Y}/${m}/${d} ${H}:${i}:${s}`;
+    }
+</script>
+
+<script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+
+    import {
+        getFirestore,
+        collection,
+        addDoc,
+        serverTimestamp,
+        onSnapshot,
+        query,
+        orderBy,
+    } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
+
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDh9DITbU8EcwOaQHOsHXnYenRl2qWHh7A",
+        authDomain: "kokoro-record.firebaseapp.com",
+        projectId: "kokoro-record",
+        storageBucket: "kokoro-record.appspot.com",
+        messagingSenderId: "239410621843",
+        appId: "1:239410621843:web:4e77b368593ebba94b0c66"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    $('#send').on('click', function () {
+        const postData = {
+            text: $('#text').val(),
+            feeling: $('#feeling').val(),
+            time: serverTimestamp(),
+        };
+        addDoc(collection(db, "record"), postData);
+        $("#text").val('');
+    });
+
+    const q = query(collection(db, "record"), orderBy("time", "desc"));
+
+    onSnapshot(q, (querySnapshot) => {
+
+        const documents = [];
+        querySnapshot.docs.forEach(function (doc) {
+            const document = {
+                id: doc.id,
+                data: doc.data(),
+            };
+            documents.push(document);
+        });
+
+        const htmlElements = [];
+        documents.forEach(function (document) {
+            htmlElements.push(`
+    <li id="${document.id}">
+      <p>${convertTimestampToDatetime(document.data.time.seconds)}</p>
+      <p>${document.data.feeling}</p>
+      <p>${document.data.text}</p>
+    </li>
+`);
+        });
+
+        $("#output").html(htmlElements);
+
+    });
+
+</script>
