@@ -104,31 +104,23 @@ function daysInMonth(iMonth, iYear) {
 }
 
 
-function getItem() {
-    let Items;
-    if (localStorage.getItem("todos") === null) {
-        todos = [];
-    } else {
-        todos = JSON.parse(localStorage.getItem("todos"));
-    }
-}
 
 /*modal close*/
 $(function () {
     $('.date').click(function () {
         $('.overlay, .modal_area').fadeIn();
     });
-    $('.save').click(function () {
+    $('.send').click(function () {
         $('.overlay, .modal_area').fadeOut();
     });
 
     /* ラジオボタンで選択したものをコンソールに呼び出す */
-    let feelingRadio = document.getElementsByName('feeling');
-    let len = feelingRadio.length;
+    const feelingRadio = document.getElementsByName('feeling');
+    const len = feelingRadio.length;
     feelingRadio[0].checked = true;
 
     function buttonClick() {
-        let checkValue = [''];
+        const checkValue = [''];
 
         for (let i = 0; i < len; i++) {
             if (feelingRadio.item(i).checked) {
@@ -137,59 +129,29 @@ $(function () {
         }
         console.log('選択されているのは ' + checkValue + ' です');
     }
-    let saveButton = document.getElementById('saveButton');
+    let saveButton = document.getElementById('send');
     saveButton.addEventListener('click', buttonClick);
 
     /* カレンダー表示 */
-    $('.save').on('click', function feelingRadio(checked) {
-        if (checked === 0) {
+    $('.send').on('click', function() {
+        if (feelingRadio.item(i).checked === 0) {
             $('.selected').html('<img src="img/good.png" alt="good" style="width:45px; height:45px;">');
         }
-        else if (checked === 1) {
+        else if (feelingRadio.item(i).checked === 1) {
             $('.selected').html('<img src="img/ok.png" alt="ok" style="width:45px; height:45px;">');
         }
-        else if (checked === 2) {
+        else if (feelingRadio.item(i).checked === 2) {
             $('.selected').html('<img src="img/soso.png" alt="soso" style="width:45px; height:45px;">');
         }
-        else if (checked === 3) {
+        else if (feelingRadio.item(i).checked === 3) {
             $('.selected').html('<img src="img/sad.png" alt="sad" style="width:45px; height:45px;">');
         }
-        else if (checked === 4) {
+        else if (feelingRadio.item(i).checked === 4) {
             $('.selected').html('<img src="img/mad.png" alt="mad" style="width:45px; height:45px;">');
         }
         else {
-            $('.selected').text('none');
+            $('.selected').text('💓');
         }
     });
 });
 
-//function txtarea() {
-   // if (num == 0) {
-   //     let div_element = document.createElement("div");
-   //     div_element.innerHTML = '<textarea style=";" id="contents" rows="5" cols="30"></textarea><br><input id="sv" type="button" value="保存" onclick="savefile()"><input id="rd" type="button" value="読取り" onclick="reader()">';
-    //    let obj = document.getElementById("today");
-    //    obj.appendChild(div_element);
-    //    num += 1;
-   // }
-//}
-//localStorageに保存
-//function saveItem() {
-
-//    let data = {
-//        title: "date",
- //       text: "",
- //   };
- //   let jsonData = JSON.stringify(data);
- //   localStorage.setItem("memo", jsonData);
-
- //   let radio = document.getElementById("contents").value;
- //   localStorage.setItem("feelingimg", radio);
- //   alert("「" + radio + "」を保存しました。");
-//}
-//localStorageから読み取り
-//function getItem() {
- //   let txt = localStorage.getItem("feelingimg");
- //   if (txt == null) txt = "データがありません！";
- //   if (txt == "") txt = "文字が入力されていません！";
- //   document.getElementById("contents").value = txt;
-//}
